@@ -27,7 +27,7 @@ function Home() {
 
   // 텍스트 동적으로 렌더링
   useEffect(() => {
-    fetch("woowahanclone/data.json")
+    fetch("data.json")
       .then((response) => response.json())
       .then((data) => {
         const paragraph2 = data[activeIndex].paragraph2 || [];
