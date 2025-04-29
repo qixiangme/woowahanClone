@@ -6,11 +6,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import News from "./News";
 
-const IMG1 =
-  "https://woowahan-cdn.woowahan.com/new_resources/image/banner/27539594cf5a46129e203067a11952d4.jpg";
-const VD1 =
-  "https://woowahan-cdn.woowahan.com/new_resources/image/banner/d7303c0c6aa149d7ba169bb49d79f8b9.mp4";
-
 function Home() {
   const [displayText, setDisplayText] = useState(""); // 동적으로 글자가 렌더링되는 텍스트
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 글자 인덱스
@@ -36,26 +31,18 @@ function Home() {
       .then((response) => response.json())
       .then((data) => {
         const paragraph2 = data[activeIndex].paragraph2 || [];
-
         if (currentIndex < paragraph2.length) {
           // 텍스트가 하나씩 추가되도록
           const timeoutId = setTimeout(() => {
             setDisplayText((prevText) => prevText + paragraph2[currentIndex]);
             setCurrentIndex((prevIndex) => prevIndex + 1); // 글자가 하나씩 추가되도록
           }, 500); // 글자가 추가될 때마다 500ms 딜레이
+          setImageData(data); // 가져온 데이터로 이미지 정보 업데이트
 
           return () => clearTimeout(timeoutId); // 타이머 클린업
         }
       });
   }, [currentIndex]); // currentIndex와 activeIndex가 변경될 때마다 실행
-  // 이미지 데이터 가져오기
-  useEffect(() => {
-    fetch("/data.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setImageData(data); // 가져온 데이터로 이미지 정보 업데이트
-      });
-  }, []); // 첫 렌더링 시 한 번만 실행
 
   return (
     <div>
